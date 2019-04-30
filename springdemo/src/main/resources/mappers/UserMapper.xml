@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mybatis.mapper.UserMapper" >
+
+    <resultMap id="BaseResultMap" type="com.example.demo.mybatis.bean.User" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="loginname" property="loginName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, name, loginname
+    </sql>
+
+    <select id="getUserByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from tuser
+        where loginname = #{name,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByLoginName" parameterType="java.lang.String" >
+        delete from tuser
+        where loginname = #{name,jdbcType=VARCHAR}
+    </delete>
+
+    <update id="updateName" parameterType="java.lang.String" >
+        update tuser set name = #{name,jdbcType=VARCHAR}, loginname = #{loginName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <insert id="insert" parameterType="com.example.demo.mybatis.bean.User" >
+        insert into tuser (name, loginname
+        )
+        values (#{name,jdbcType=VARCHAR}, #{loginName,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        id, name, loginname
+        from tuser
+    </select>
+
+</mapper>
